@@ -11,13 +11,14 @@ import java.util.logging.SimpleFormatter;
 
 public class DZ2 {
     public static void main(String[] args) {
-        //ex1("/dsds/dsds/d//stest1.txt", "очень важная инфа");
-        //System.out.println(ex2());
-        int[] ar = {92,4,8,4,6,8,9};
+        // ex1("/dsds/dsds/d//stest1.txt", "очень важная инфа");
+        // System.out.println(ex2());
+        int[] ar = { 92, 4, 8, 4, 6, 8, 9 };
         ex3(ar);
         System.out.println(Arrays.toString(ar));
     }
-    static void ex3(int[] arr){
+
+    static void ex3(int[] arr) {
 
         Logger logger = Logger.getAnonymousLogger();
         SimpleFormatter forat = new SimpleFormatter();
@@ -25,24 +26,24 @@ public class DZ2 {
         try {
             fileHandler = new FileHandler("logEx3.txt", true);
             fileHandler.setFormatter(forat);
-        } catch ( Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         logger.addHandler(fileHandler);
 
         for (int i = 0; i < arr.length; i++) {
-            for (int j = i; j < arr.length-1; j++) {
-                if (arr[j] > arr[j + 1]){
+            for (int j = i; j < arr.length - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
                     logger.log(Level.INFO, "все ок");
                     int temp = arr[j];
-                    arr[j] = arr[j+1];
+                    arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
                 }
             }
         }
     }
 
-    static void ex3WraeatFileLog(String message){
+    static void ex3WraeatFileLog(String message) {
         // нераюотает создает кол-во файлов равное колву итераций) интересно
         Logger logger = Logger.getAnonymousLogger();
         SimpleFormatter forat = new SimpleFormatter();
@@ -50,27 +51,31 @@ public class DZ2 {
         try {
             fileHandler = new FileHandler("logex3.txt", true);
             fileHandler.setFormatter(forat);
-        } catch ( Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         logger.addHandler(fileHandler);
         logger.log(Level.INFO, message);
     }
-    static String ex2(){
+
+    static String ex2() {
         File file = new File("test.json");
         StringBuilder stringBuilder = new StringBuilder();
-        try(Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
-            while (scanner.hasNextLine()){
+        try (Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
+            while (scanner.hasNextLine()) {
                 stringBuilder.append(scanner.nextLine());
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return stringBuilder.toString();
     }
 
-    static void ex1(String filePath, String s){
-        /*Создать метод, который запишет результат работы в файл Обработайте исключения и запишите ошибки в лог файл*/
+    static void ex1(String filePath, String s) {
+        /*
+         * Создать метод, который запишет результат работы в файл Обработайте исключения
+         * и запишите ошибки в лог файл
+         */
 
         Logger logger = Logger.getAnonymousLogger();
         SimpleFormatter simpleFormatter = new SimpleFormatter();
@@ -79,50 +84,49 @@ public class DZ2 {
             fileHandler = new FileHandler("log.txt", true);
             fileHandler.setFormatter(simpleFormatter);
         } catch (IOException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
 
         logger.addHandler(fileHandler);
 
-        try(FileWriter fileWriter = new FileWriter(filePath);) {
+        try (FileWriter fileWriter = new FileWriter(filePath);) {
             fileWriter.write(s);
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
-//            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
-    static String ex0(){
+    static String ex0() {
         File file = new File("test.json");
         StringBuilder stringBuilder = new StringBuilder();
 
-        try(Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
-            while (scanner.hasNextLine()){
+        try (Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
+            while (scanner.hasNextLine()) {
                 stringBuilder.append(scanner.nextLine());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         ArrayList<String> sList = new ArrayList<>();
 
-        String[] sArr = stringBuilder.toString().replace("[", "").replace("]", "").
-                replace("{", "").replace("}", "").replace(" ", "").
-                replace('"','~').replace("~", "").split(",");
+        String[] sArr = stringBuilder.toString().replace("[", "").replace("]", "").replace("{", "").replace("}", "")
+                .replace(" ", "").replace('"', '~').replace("~", "").split(",");
 
         for (int i = 0; i < sArr.length; i++) {
             sList.add(sArr[i].split(":")[1]);
         }
         Object[] resArray = sList.toArray();
         String res = "";
-        for (int i = 0; i < resArray.length; i+=3) {
-            res += "Студент "  + resArray[i] + " получил " + resArray[i+1] + " по предмету " + resArray[i+2] + "\n";
+        for (int i = 0; i < resArray.length; i += 3) {
+            res += "Студент " + resArray[i] + " получил " + resArray[i + 1] + " по предмету " + resArray[i + 2] + "\n";
         }
-       return res;
+        return res;
 
     }
 
-    static String getType(Object x){
+    static String getType(Object x) {
         return x.getClass().getSimpleName();
     }
 }
